@@ -35,13 +35,6 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
-# 📊 GitHub Stats:
-![](https://github-readme-stats.shion.dev/api?username=mohanraj9342&theme=transparent&hide_border=true&include_all_commits=false&count_private=true)
-
-![](https://streak-stats.demolab.com/?user=mohanraj9342&theme=transparent&hide_border=true)
-
-![](https://github-readme-stats.shion.dev/api/top-langs/?username=mohanraj9342&theme=transparent&hide_border=true&include_all_commits=false&count_private=true&layout=compact)
-
 ### ✍️ Random Quote
 
 >  I use Arch BTW ❌  I use malware BTW ✅.
