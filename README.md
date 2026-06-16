@@ -46,5 +46,3 @@
 
 >  I use Arch BTW ❌  I use malware BTW ✅.
 ---
-
-[![](https://komarev.com/ghpvc/?username=mohanraj9342&icon=2&color=0)](https://visitcount.itsvg.in)
