@@ -37,5 +37,5 @@
 
 ### ✍️ Random Quote
 
->  I use Arch BTW ❌  I use malware BTW ✅.
+>  I use Arch BTW ❌  I use Malware BTW ✅.
 ---
