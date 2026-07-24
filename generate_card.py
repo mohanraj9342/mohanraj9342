@@ -3,6 +3,7 @@
 GitHub Profile Stats Card SVG Generator
 Theme: Storm Flow Pro (#004e92 -> #000428)
 Zero external dependencies.
+Fetches all-time contributions across all active years.
 """
 
 import os
@@ -37,43 +38,19 @@ DEMO_STATS = {
 }
 
 LANGUAGE_FALLBACK_COLORS = {
-    "Python": "#3572A5",
-    "TypeScript": "#3178c6",
-    "JavaScript": "#f1e05a",
-    "HTML": "#e34c26",
-    "CSS": "#563d7c",
-    "C++": "#f34b7d",
-    "C": "#555555",
-    "Go": "#00ADD8",
-    "Rust": "#dea584",
-    "Java": "#b07219",
-    "Shell": "#89e051",
-    "Vue": "#41b883",
-    "React": "#61dafb",
-    "Dart": "#00B4AB",
+    "Python": "#3572A5", "TypeScript": "#3178c6", "JavaScript": "#f1e05a",
+    "HTML": "#e34c26", "CSS": "#563d7c", "C++": "#f34b7d", "C": "#555555",
+    "Go": "#00ADD8", "Rust": "#dea584", "Java": "#b07219", "Shell": "#89e051",
+    "Vue": "#41b883", "React": "#61dafb", "Dart": "#00B4AB",
 }
 
-# --- GraphQL Query ---
-GRAPHQL_QUERY = """
+# --- GraphQL Queries ---
+INIT_QUERY = """
 query($login: String!) {
   user(login: $login) {
     name
     login
-    contributionsCollection {
-      totalCommitContributions
-      totalIssueContributions
-      totalPullRequestContributions
-      totalRepositoryContributions
-      contributionCalendar {
-        totalContributions
-        weeks {
-          contributionDays {
-            contributionCount
-            date
-          }
-        }
-      }
-    }
+    createdAt
     repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
       nodes {
         name
@@ -93,26 +70,12 @@ query($login: String!) {
 }
 """
 
-VIEWER_QUERY = """
+INIT_VIEWER_QUERY = """
 query {
   viewer {
     name
     login
-    contributionsCollection {
-      totalCommitContributions
-      totalIssueContributions
-      totalPullRequestContributions
-      totalRepositoryContributions
-      contributionCalendar {
-        totalContributions
-        weeks {
-          contributionDays {
-            contributionCount
-            date
-          }
-        }
-      }
-    }
+    createdAt
     repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
       nodes {
         name
@@ -132,19 +95,40 @@ query {
 }
 """
 
-def fetch_github_data(token, username=None):
+YEAR_QUERY = """
+query($login: String!, $from: DateTime!, $to: DateTime!) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      totalCommitContributions
+      totalIssueContributions
+      totalPullRequestContributions
+      totalRepositoryContributions
+      contributionCalendar {
+        totalContributions
+        weeks {
+          contributionDays {
+            contributionCount
+            date
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+def graphql_request(token, query, variables=None):
     url = "https://api.github.com/graphql"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
         "User-Agent": "GitHub-Stats-Card-Generator"
     }
-
-    if username:
-        payload = json.dumps({"query": GRAPHQL_QUERY, "variables": {"login": username}}).encode('utf-8')
-    else:
-        payload = json.dumps({"query": VIEWER_QUERY}).encode('utf-8')
-
+    payload_dict = {"query": query}
+    if variables:
+        payload_dict["variables"] = variables
+        
+    payload = json.dumps(payload_dict).encode('utf-8')
     req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
     try:
         with urllib.request.urlopen(req) as response:
@@ -152,34 +136,90 @@ def fetch_github_data(token, username=None):
             if "errors" in res_data:
                 print(f"GraphQL Errors: {res_data['errors']}", file=sys.stderr)
                 return None
-            user_data = res_data.get("data", {}).get("user") or res_data.get("data", {}).get("viewer")
-            return user_data
+            return res_data.get("data")
     except Exception as e:
         print(f"Error fetching data from GitHub API: {e}", file=sys.stderr)
         return None
 
-def process_stats(user_data):
-    if not user_data:
+def fetch_all_time_stats(token, username=None):
+    # 1. Fetch initial user info (createdAt and repos)
+    print("Fetching user base info and repositories...", file=sys.stderr)
+    if username:
+        init_data = graphql_request(token, INIT_QUERY, {"login": username})
+        if init_data: user_node = init_data.get("user")
+        else: user_node = None
+    else:
+        init_data = graphql_request(token, INIT_VIEWER_QUERY)
+        if init_data: user_node = init_data.get("viewer")
+        else: user_node = None
+
+    if not user_node:
+        return None
+
+    created_at = user_node.get("createdAt")
+    if not created_at:
+        start_year = datetime.datetime.utcnow().year
+    else:
+        # e.g., "2020-10-10T10:10:10Z"
+        start_year = int(created_at[:4])
+        
+    current_year = datetime.datetime.utcnow().year
+
+    # Base aggregate
+    agg = {
+        "name": user_node.get("name") or user_node.get("login") or "GitHub User",
+        "login": user_node.get("login") or "",
+        "total_contributions": 0,
+        "total_commits": 0,
+        "total_issues": 0,
+        "total_prs": 0,
+        "days": [],
+        "repositories": user_node.get("repositories")
+    }
+
+    # 2. Fetch contributions for every year
+    login = user_node.get("login") # Need actual login for YEAR_QUERY
+    if not login:
+        print("Could not determine user login.", file=sys.stderr)
+        return None
+
+    for year in range(start_year, current_year + 1):
+        print(f"Fetching contributions for {year}...", file=sys.stderr)
+        from_date = f"{year}-01-01T00:00:00Z"
+        to_date = f"{year}-12-31T23:59:59Z"
+        
+        y_data = graphql_request(token, YEAR_QUERY, {"login": login, "from": from_date, "to": to_date})
+        
+        if y_data and y_data.get("user") and y_data["user"].get("contributionsCollection"):
+            contribs = y_data["user"]["contributionsCollection"]
+            agg["total_commits"] += contribs.get("totalCommitContributions", 0)
+            agg["total_issues"] += contribs.get("totalIssueContributions", 0)
+            agg["total_prs"] += contribs.get("totalPullRequestContributions", 0)
+            
+            cal = contribs.get("contributionCalendar", {})
+            agg["total_contributions"] += cal.get("totalContributions", 0)
+            
+            for week in cal.get("weeks", []):
+                for day in week.get("contributionDays", []):
+                    agg["days"].append(day)
+
+    return agg
+
+def process_stats(agg_data):
+    if not agg_data:
         return DEMO_STATS
 
-    name = user_data.get("name") or user_data.get("login") or "GitHub User"
-    login = user_data.get("login") or ""
-
-    contribs = user_data.get("contributionsCollection", {})
-    total_commits = contribs.get("totalCommitContributions", 0)
-    total_issues = contribs.get("totalIssueContributions", 0)
-    total_prs = contribs.get("totalPullRequestContributions", 0)
-
-    calendar = contribs.get("contributionCalendar", {})
-    total_contributions = calendar.get("totalContributions", 0)
-
     # Calculate streaks
-    days = []
-    for week in calendar.get("weeks", []):
-        for day in week.get("contributionDays", []):
-            days.append(day)
-
+    days = agg_data["days"]
+    # Sort strictly by date across all years
     days.sort(key=lambda d: d["date"])
+    
+    # Filter out duplicate dates if any boundary overlaps occurred
+    unique_days = {}
+    for d in days:
+        unique_days[d["date"]] = d
+        
+    sorted_unique_days = [unique_days[k] for k in sorted(unique_days.keys())]
 
     current_streak = 0
     longest_streak = 0
@@ -188,7 +228,7 @@ def process_stats(user_data):
     today_str = datetime.datetime.utcnow().strftime("%Y-%m-%d")
 
     # Longest streak calculation
-    for day in days:
+    for day in sorted_unique_days:
         if day["contributionCount"] > 0:
             temp_streak += 1
             if temp_streak > longest_streak:
@@ -197,11 +237,16 @@ def process_stats(user_data):
             temp_streak = 0
 
     # Current streak calculation (scan backwards from latest)
-    idx = len(days) - 1
+    idx = len(sorted_unique_days) - 1
     while idx >= 0:
-        day = days[idx]
+        day = sorted_unique_days[idx]
         d_date = day["date"]
         d_count = day["contributionCount"]
+
+        if d_date > today_str:
+            # Future days
+            idx -= 1
+            continue
 
         if d_date == today_str and d_count == 0:
             idx -= 1
@@ -211,12 +256,12 @@ def process_stats(user_data):
             current_streak += 1
             idx -= 1
         else:
-            if d_date != today_str:
+            if d_date != today_str and d_date < today_str:
                 break
             idx -= 1
 
     # Total Stars & Languages
-    repos = user_data.get("repositories", {}).get("nodes", [])
+    repos = agg_data.get("repositories", {}).get("nodes", [])
     total_stars = 0
     lang_sizes = {}
     lang_colors = {}
@@ -249,15 +294,15 @@ def process_stats(user_data):
         })
 
     return {
-        "name": name,
-        "login": login,
-        "total_contributions": total_contributions,
+        "name": agg_data["name"],
+        "login": agg_data["login"],
+        "total_contributions": agg_data["total_contributions"],
         "current_streak": current_streak,
         "longest_streak": longest_streak,
         "total_stars": total_stars,
-        "total_prs": total_prs,
-        "total_issues": total_issues,
-        "total_commits": total_commits,
+        "total_prs": agg_data["total_prs"],
+        "total_issues": agg_data["total_issues"],
+        "total_commits": agg_data["total_commits"],
         "languages": languages
     }
 
@@ -329,7 +374,7 @@ def generate_svg(stats):
     <!-- Header Block -->
     <g transform="translate(35, 45)">
         <text class="title">{name}</text>
-        <text y="20" class="subtitle">@{login} • GitHub Analytics</text>
+        <text y="20" class="subtitle">@{login} • GitHub Analytics (All-Time)</text>
         <rect x="0" y="32" width="730" height="1" fill="rgba(255, 255, 255, 0.12)" />
     </g>
 
@@ -404,10 +449,10 @@ def main():
         stats = DEMO_STATS
     else:
         username = os.environ.get("CARD_USERNAME", DEFAULT_USERNAME)
-        print(f"Fetching GitHub statistics for user: {username}...", file=sys.stderr)
-        raw_data = fetch_github_data(token, username)
-        if raw_data:
-            stats = process_stats(raw_data)
+        print(f"Fetching All-Time GitHub statistics for user: {username}...", file=sys.stderr)
+        agg_data = fetch_all_time_stats(token, username)
+        if agg_data:
+            stats = process_stats(agg_data)
         else:
             print("Failed to fetch GitHub API data. Falling back to demo data.", file=sys.stderr)
             stats = DEMO_STATS
