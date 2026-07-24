@@ -32,5 +32,5 @@ jobs:
         with:
           commit_message: "chore: update live stats card [skip ci]"
           file_pattern: "stats-card.svg"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_user_name: "Mohanraj V"
+          commit_user_email: "mohanrajvelayutham08@gmail.com"
