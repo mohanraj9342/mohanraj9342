@@ -24,7 +24,7 @@ jobs:
 
       - name: Generate Stats SVG
         env:
-          CARD_TOKEN: ${{ secrets.CARD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_card.py
 
       - name: Commit and Push Updated SVG
