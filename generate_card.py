@@ -330,7 +330,7 @@ def generate_svg(stats):
             <circle cx="6" cy="6" r="5" fill="{color}" />
             <text x="18" y="10" class="lang-name">{l_name}</text>
             <text x="245" y="10" class="lang-pct" text-anchor="end">{pct}%</text>
-            <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(255,255,255,0.08)"/>
+            <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
             <rect x="0" y="18" width="{int(245 * (pct / 100))}" height="7" rx="3.5" fill="{color}"/>
         </g>
         """)
@@ -340,32 +340,32 @@ def generate_svg(stats):
 
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="800" height="360" viewBox="0 0 800 360" fill="none">
     <defs>
-        <!-- Storm Flow Pro Gradient -->
+        <!-- Hacker Dark Gradient -->
         <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#004e92" />
-            <stop offset="100%" stop-color="#000428" />
+            <stop offset="0%" stop-color="#0a0a0a" />
+            <stop offset="100%" stop-color="#0d1117" />
         </linearGradient>
 
-        <!-- Glassmorphic Border Gradient -->
+        <!-- Green Glow Border Gradient -->
         <linearGradient id="glass-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.25)" />
-            <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
+            <stop offset="0%" stop-color="rgba(0, 255, 65, 0.3)" />
+            <stop offset="100%" stop-color="rgba(0, 255, 65, 0.08)" />
         </linearGradient>
     </defs>
 
     <style>
-        .title {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #ffffff; letter-spacing: 0.5px; }}
-        .subtitle {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 1.5px; }}
-        .stat-label {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 13px; font-weight: 500; fill: rgba(255, 255, 255, 0.7); }}
-        .stat-value {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #ffffff; }}
-        .stat-unit {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 11px; font-weight: 400; fill: rgba(255, 255, 255, 0.5); }}
-        .section-header {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 15px; font-weight: 600; fill: #ffffff; letter-spacing: 0.5px; }}
-        .lang-name {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 12px; font-weight: 600; fill: #e6f1ff; }}
-        .lang-pct {{ font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: rgba(255, 255, 255, 0.7); }}
+        .title {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 22px; font-weight: 700; fill: #00ff41; letter-spacing: 0.5px; }}
+        .subtitle {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 12px; font-weight: 500; fill: rgba(0, 255, 65, 0.6); letter-spacing: 1.5px; }}
+        .stat-label {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 13px; font-weight: 500; fill: rgba(0, 255, 65, 0.7); }}
+        .stat-value {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 20px; font-weight: 700; fill: #00ff41; }}
+        .stat-unit {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 11px; font-weight: 400; fill: rgba(0, 255, 65, 0.5); }}
+        .section-header {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 15px; font-weight: 600; fill: #00ff41; letter-spacing: 0.5px; }}
+        .lang-name {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 12px; font-weight: 600; fill: #b5f5c8; }}
+        .lang-pct {{ font-family: 'Courier New', 'Fira Code', monospace; font-size: 12px; font-weight: 500; fill: rgba(0, 255, 65, 0.7); }}
         
         .card-bg {{ fill: url(#bg-grad); rx: 16px; }}
-        .panel {{ fill: rgba(255, 255, 255, 0.05); stroke: url(#glass-stroke); stroke-width: 1.2px; rx: 12px; }}
-        .icon {{ fill: #00c6ff; }}
+        .panel {{ fill: rgba(0, 255, 65, 0.04); stroke: url(#glass-stroke); stroke-width: 1.2px; rx: 12px; }}
+        .icon {{ fill: #00ff41; }}
     </style>
 
     <!-- Main Card Frame -->
@@ -375,7 +375,7 @@ def generate_svg(stats):
     <g transform="translate(35, 45)">
         <text class="title">{name}</text>
         <text y="20" class="subtitle">@{login} • GitHub Analytics (All-Time)</text>
-        <rect x="0" y="32" width="730" height="1" fill="rgba(255, 255, 255, 0.12)" />
+        <rect x="0" y="32" width="730" height="1" fill="rgba(0, 255, 65, 0.2)" />
     </g>
 
     <!-- Left Panel: Key Stats Grid -->
@@ -384,7 +384,7 @@ def generate_svg(stats):
         
         <!-- Total Contributions -->
         <g transform="translate(25, 25)">
-            <circle cx="16" cy="16" r="16" fill="rgba(0, 198, 255, 0.15)" />
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
             <path class="icon" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" transform="translate(3, 3) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Total Contributions</text>
             <text x="45" y="34" class="stat-value">{total_contribs}</text>
@@ -392,40 +392,40 @@ def generate_svg(stats):
 
         <!-- Current Streak -->
         <g transform="translate(230, 25)">
-            <circle cx="16" cy="16" r="16" fill="rgba(255, 154, 0, 0.15)" />
-            <path fill="#ff9a00" d="M13.5 1.5s0 3-2.5 5.5c-2.5 2.5-3.5 3.5-3.5 5.5 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2-6-2-11z" transform="translate(5, 4) scale(0.9)"/>
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
+            <path fill="#00ff41" d="M13.5 1.5s0 3-2.5 5.5c-2.5 2.5-3.5 3.5-3.5 5.5 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2-6-2-11z" transform="translate(5, 4) scale(0.9)"/>
             <text x="45" y="14" class="stat-label">Current Streak</text>
             <text x="45" y="34" class="stat-value">{current_streak} <tspan class="stat-unit">days</tspan></text>
         </g>
 
         <!-- Longest Streak -->
         <g transform="translate(25, 95)">
-            <circle cx="16" cy="16" r="16" fill="rgba(255, 215, 0, 0.15)" />
-            <path fill="#ffd700" d="M7 2v11h3v9l7-12h-4l4-8z" transform="translate(6, 4) scale(0.9)"/>
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
+            <path fill="#39ff14" d="M7 2v11h3v9l7-12h-4l4-8z" transform="translate(6, 4) scale(0.9)"/>
             <text x="45" y="14" class="stat-label">Longest Streak</text>
             <text x="45" y="34" class="stat-value">{longest_streak} <tspan class="stat-unit">days</tspan></text>
         </g>
 
         <!-- Stars -->
         <g transform="translate(230, 95)">
-            <circle cx="16" cy="16" r="16" fill="rgba(255, 230, 0, 0.15)" />
-            <path fill="#ffe600" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" transform="translate(4, 4) scale(0.8)"/>
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
+            <path fill="#7dff6f" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" transform="translate(4, 4) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Total Stars</text>
             <text x="45" y="34" class="stat-value">{stars}</text>
         </g>
 
         <!-- Pull Requests -->
         <g transform="translate(25, 165)">
-            <circle cx="16" cy="16" r="16" fill="rgba(168, 85, 247, 0.15)" />
-            <path fill="#a855f7" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2H6zm10 0a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2h-2z" transform="translate(4, 4) scale(0.8)"/>
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
+            <path fill="#00e639" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2H6zm10 0a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2h-2z" transform="translate(4, 4) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Pull Requests</text>
             <text x="45" y="34" class="stat-value">{prs}</text>
         </g>
 
         <!-- Total Commits -->
         <g transform="translate(230, 165)">
-            <circle cx="16" cy="16" r="16" fill="rgba(52, 211, 153, 0.15)" />
-            <path fill="#34d399" d="M12 6a6 6 0 00-5.65 4H2v4h4.35A6 6 0 0017.65 14H22v-4h-4.35A6 6 0 0012 6zm0 8a2 2 0 110-4 2 2 0 010 4z" transform="translate(2, 4) scale(0.8)"/>
+            <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
+            <path fill="#00ff41" d="M12 6a6 6 0 00-5.65 4H2v4h4.35A6 6 0 0017.65 14H22v-4h-4.35A6 6 0 0012 6zm0 8a2 2 0 110-4 2 2 0 010 4z" transform="translate(2, 4) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Total Commits</text>
             <text x="45" y="34" class="stat-value">{commits}</text>
         </g>
