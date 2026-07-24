@@ -35,6 +35,14 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
+### Activity Statistics
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/mohanraj9342/mohanraj9342/main/stats-card.svg" alt="GitHub Stats" width="100%" />
+</div>
+
+---
+
 ### ✍️ Random Quote
 
 >  I use Arch BTW ❌  I use Malware BTW ✅.
