@@ -374,7 +374,7 @@ def generate_svg(stats):
     <!-- Header Block -->
     <g transform="translate(35, 45)">
         <text class="title">{name}</text>
-        <text y="20" class="subtitle">@{login} • GitHub Analytics (All-Time)</text>
+        <text y="20" class="subtitle">@{login} • GitHub Analytics</text>
         <rect x="0" y="32" width="730" height="1" fill="rgba(0, 255, 65, 0.2)" />
     </g>
 
