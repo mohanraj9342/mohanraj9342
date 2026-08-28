@@ -47,7 +47,7 @@
             <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
             <path class="icon" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" transform="translate(3, 3) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Total Contributions</text>
-            <text x="45" y="34" class="stat-value">435</text>
+            <text x="45" y="34" class="stat-value">436</text>
         </g>
 
         <!-- Current Streak -->
@@ -55,7 +55,7 @@
             <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
             <path fill="#00ff41" d="M13.5 1.5s0 3-2.5 5.5c-2.5 2.5-3.5 3.5-3.5 5.5 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2-6-2-11z" transform="translate(5, 4) scale(0.9)"/>
             <text x="45" y="14" class="stat-label">Current Streak</text>
-            <text x="45" y="34" class="stat-value">38 <tspan class="stat-unit">days</tspan></text>
+            <text x="45" y="34" class="stat-value">39 <tspan class="stat-unit">days</tspan></text>
         </g>
 
         <!-- Longest Streak -->
@@ -63,7 +63,7 @@
             <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
             <path fill="#39ff14" d="M7 2v11h3v9l7-12h-4l4-8z" transform="translate(6, 4) scale(0.9)"/>
             <text x="45" y="14" class="stat-label">Longest Streak</text>
-            <text x="45" y="34" class="stat-value">38 <tspan class="stat-unit">days</tspan></text>
+            <text x="45" y="34" class="stat-value">39 <tspan class="stat-unit">days</tspan></text>
         </g>
 
         <!-- Stars -->
@@ -79,7 +79,7 @@
             <circle cx="16" cy="16" r="16" fill="rgba(0, 255, 65, 0.12)" />
             <path fill="#00e639" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2H6zm10 0a2 2 0 00-2 2v12a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2h-2z" transform="translate(4, 4) scale(0.8)"/>
             <text x="45" y="14" class="stat-label">Pull Requests</text>
-            <text x="45" y="34" class="stat-value">6</text>
+            <text x="45" y="34" class="stat-value">5</text>
         </g>
 
         <!-- Total Commits -->
@@ -99,45 +99,45 @@
         <g transform="translate(20, 50)">
             <circle cx="6" cy="6" r="5" fill="#DA5B0B" />
             <text x="18" y="10" class="lang-name">Jupyter Notebook</text>
-            <text x="245" y="10" class="lang-pct" text-anchor="end">29.4%</text>
+            <text x="245" y="10" class="lang-pct" text-anchor="end">26.2%</text>
             <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
-            <rect x="0" y="18" width="72" height="7" rx="3.5" fill="#DA5B0B"/>
+            <rect x="0" y="18" width="64" height="7" rx="3.5" fill="#DA5B0B"/>
         </g>
         
 
         <g transform="translate(20, 86)">
             <circle cx="6" cy="6" r="5" fill="#f1e05a" />
             <text x="18" y="10" class="lang-name">JavaScript</text>
-            <text x="245" y="10" class="lang-pct" text-anchor="end">20.6%</text>
+            <text x="245" y="10" class="lang-pct" text-anchor="end">22.8%</text>
             <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
-            <rect x="0" y="18" width="50" height="7" rx="3.5" fill="#f1e05a"/>
+            <rect x="0" y="18" width="55" height="7" rx="3.5" fill="#f1e05a"/>
         </g>
         
 
         <g transform="translate(20, 122)">
-            <circle cx="6" cy="6" r="5" fill="#A97BFF" />
-            <text x="18" y="10" class="lang-name">Kotlin</text>
-            <text x="245" y="10" class="lang-pct" text-anchor="end">19.5%</text>
+            <circle cx="6" cy="6" r="5" fill="#3572A5" />
+            <text x="18" y="10" class="lang-name">Python</text>
+            <text x="245" y="10" class="lang-pct" text-anchor="end">21.9%</text>
             <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
-            <rect x="0" y="18" width="47" height="7" rx="3.5" fill="#A97BFF"/>
+            <rect x="0" y="18" width="53" height="7" rx="3.5" fill="#3572A5"/>
         </g>
         
 
         <g transform="translate(20, 158)">
-            <circle cx="6" cy="6" r="5" fill="#3572A5" />
-            <text x="18" y="10" class="lang-name">Python</text>
-            <text x="245" y="10" class="lang-pct" text-anchor="end">18.7%</text>
+            <circle cx="6" cy="6" r="5" fill="#A97BFF" />
+            <text x="18" y="10" class="lang-name">Kotlin</text>
+            <text x="245" y="10" class="lang-pct" text-anchor="end">17.4%</text>
             <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
-            <rect x="0" y="18" width="45" height="7" rx="3.5" fill="#3572A5"/>
+            <rect x="0" y="18" width="42" height="7" rx="3.5" fill="#A97BFF"/>
         </g>
         
 
         <g transform="translate(20, 194)">
             <circle cx="6" cy="6" r="5" fill="#e34c26" />
             <text x="18" y="10" class="lang-name">HTML</text>
-            <text x="245" y="10" class="lang-pct" text-anchor="end">6.3%</text>
+            <text x="245" y="10" class="lang-pct" text-anchor="end">5.6%</text>
             <rect x="0" y="18" width="245" height="7" rx="3.5" fill="rgba(0, 255, 65, 0.08)"/>
-            <rect x="0" y="18" width="15" height="7" rx="3.5" fill="#e34c26"/>
+            <rect x="0" y="18" width="13" height="7" rx="3.5" fill="#e34c26"/>
         </g>
         
     </g>
